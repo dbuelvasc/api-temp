@@ -1,0 +1,735 @@
+{
+	"info": {
+		"_postman_id": "f787fd83-8ca6-4cb5-841d-2d714a7a2f11",
+		"name": "CulturaGastronomica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión como administrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_cultura\", data.id);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Griega\",\r\n    \"descripcion\": \"Los griegos comparten tradiciones gastronómicas con Italia, pero también con Oriente Medio y, debido a su territorio, se especializan en comida mediterránea con una alta diversidad de platillos y vinos. \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear una cultura gastronómica",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Nombre de prueba\",\r\n    \"descripcion\": \"Descripción de prueba\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 0,\n    \"nombre\": \"Nombre de cultura gastronómica\",\n    \"descripcion\": \"Descripción de cultura gastronómica\",\n    \"paises\": [],\n    \"productos\": [],\n    \"recetas\": [],\n    \"restaurantes\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Es codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una cultura gastronómica",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"id\" : 0,\r\n    \"nombre\": \"Nombre de cultura gastronómica\",\r\n    \"descripcion\": \"Descripción de cultura gastronómica\",\r\n    \"paises\" : [],\r\n    \"productos\" : [],\r\n    \"recetas\" : [],\r\n    \"restaurantes\" : []\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una cultura gastronómica inexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"La cultura gastronómica con el id dado no existe\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener las culturas gastronómicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Numero de culturas > 0' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener las culturas gastronómicas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 0,\n        \"nombre\": \"Nombre de cultura gastronómica\",\n        \"descripcion\": \"Descripción de cultura gastronómica\",\n        \"paises\": [],\n        \"productos\": [],\n        \"recetas\": [],\n        \"restaurantes\": []\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Cultura griega\",\r\n    \"descripcion\": \"Se concentra en un patrón de dieta totalmente mediterráneo, basado en el uso de pocas carnes e hidratos de carbono y muchos y muy variados alimentos vegetales\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar una cultura gastronómica",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Nombre de prueba\",\r\n    \"descripcion\": \"Descripción de prueba\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 0,\n    \"nombre\": \"Nombre de cultura gastronómica\",\n    \"descripcion\": \"Descripción de cultura gastronómica\",\n    \"paises\": [],\n    \"productos\": [],\n    \"recetas\": [],\n    \"restaurantes\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Cultura griega\",\r\n    \"descripcion\": \"Sin datos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar una cultura gastronómica",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Nombre de prueba\",\r\n    \"descripcion\": \"Descripción de prueba\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/culturas-gastronomicas/{{id_cultura}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n   \"codigoEstado\": 404,\r\n   \"mensaje\": \"La cultura gastronómica con el id dado no existe\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar una cultura gastronómica",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Eliminar una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar una cultura gastronómica inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"La cultura gastronómica con el id dado no existe\"\n}"
+				}
+			]
+		}
+	]
+}

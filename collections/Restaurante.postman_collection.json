@@ -1,0 +1,654 @@
+{
+	"info": {
+		"_postman_id": "0f0ef060-dc8a-430c-8340-678d8a94e603",
+		"name": "Restaurante",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1367953"
+	},
+	"item": [
+    {
+      "name": "Iniciar sesión como administrador",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var data = pm.response.json()\r",
+              "pm.globals.set(\"token\", data.token);\r",
+              "\r",
+              "pm.test(\"El codigo de estado es 201\", function () {\r",
+              "   pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/users/login",
+          "host": ["{{baseURL}}"],
+          "path": ["users", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear un restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response must have an id', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nombre\": \"Restaurante\",\n    \"ciudad\": \"Ciudad\"\n}\n"
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes"]
+        }
+      },
+      "response": [
+        {
+          "name": "201: Crear un restaurante",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"La Hacienda\",\n    \"ciudad\": \"Madrid\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/restaurantes",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes"]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": 123,\n    \"nombre\": \"La Hacienda\",\n    \"ciudad\": \"Madrid\"\n}\n"
+        }
+      ]
+    },
+    {
+      "name": "Obtener todos los restaurantes",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes"]
+        }
+      },
+      "response": [
+        {
+          "name": "200: Obtener todos los restaurantes",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"id\": 123,\n        \"nombre\": \"La Hacienda\",\n        \"ciudad\": \"Madrid\"\n    },\n    {\n        \"id\": 124,\n        \"nombre\": \"El Bistró\",\n        \"ciudad\": \"Barcelona\"\n    }\n]\n"
+        }
+      ]
+    },
+    {
+      "name": "Obtener un restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains restaurant data\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('nombre');",
+              "    pm.expect(jsonData).to.have.property('ciudad');",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/restaurantes/{{idRestaurante}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes", "{{idRestaurante}}"]
+        }
+      },
+      "response": [
+        {
+          "name": "200: Obtener un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/123",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "123"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": 123,\n    \"nombre\": \"La Hacienda\",\n    \"ciudad\": \"Madrid\"\n}\n"
+        },
+        {
+          "name": "404: Obtener un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/124",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "124"]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": \"Not Found\",\n    \"message\": \"Restaurante no encontrado\"\n}\n"
+        }
+      ]
+    },
+    {
+      "name": "Actualizar un restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains updated data\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.nombre).to.eql(pm.environment.get(\"nombre\"));",
+              "    pm.expect(jsonData.ciudad).to.eql(pm.environment.get(\"ciudad\"));",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nombre\": \"Restaurante Actualizado\",\n    \"ciudad\": \"Nueva Ciudad\"\n}\n"
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes/{{idRestaurante}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes", "{{idRestaurante}}"]
+        }
+      },
+      "response": [
+        {
+          "name": "200: Actualizar un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/123",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "123"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": 123,\n    \"nombre\": \"La Hacienda Renovada\",\n    \"ciudad\": \"Barcelona\"\n}\n"
+        },
+        {
+          "name": "404: Actualizar un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/124",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "124"]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": \"Not Found\",\n    \"message\": \"Restaurante no encontrado\"\n}\n"
+        }
+      ]
+    },
+    {
+      "name": "Eliminar un restaurante",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes/{{idRestaurante}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes", "{{idRestaurante}}"]
+        }
+      },
+      "response": [
+        {
+          "name": "204: Eliminar un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/123",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "123"]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Restaurante eliminado exitosamente\"\n}\n"
+        },
+        {
+          "name": "404: Eliminar un restaurante",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/124",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "124"]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": \"Not Found\",\n    \"message\": \"Restaurante no encontrado\"\n}\n"
+        }
+      ]
+    },
+    {
+      "name": "Obtener listado de culturas gastronómicas asociadas a un restaurante.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains list of culinary cultures\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('culturasGastronomicas');",
+              "    pm.expect(jsonData.culturasGastronomicas).to.be.an('array');",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/restaurantes/{{idRestaurante}}/culturas-gastronomicas",
+          "host": ["{{baseURL}}"],
+          "path": [
+            "restaurantes",
+            "{{idRestaurante}}",
+            "culturas-gastronomicas"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "200: Obtener listado de culturas gastronómicas asociadas a un restaurante.",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/789/culturas-gastronomicas",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "789", "culturas-gastronomicas"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"restaurantId\": 789,\n    \"culturasGastronomicas\": [\n        {\n            \"id\": 1,\n            \"nombre\": \"Mexicana\"\n        },\n        {\n            \"id\": 2,\n            \"nombre\": \"Italiana\"\n        }\n    ]\n}"
+        },
+        {
+          "name": "404: Obtener listado de culturas gastronómicas asociadas a un restaurante.",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/restaurantes/788/culturas-gastronomicas",
+              "host": ["{{baseURL}}"],
+              "path": ["restaurantes", "788", "culturas-gastronomicas"]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "name": "Content-Type",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"error\": \"El restaurante especificado no se encontró.\"\n}"
+        }
+      ]
+    }
+  ]
+}

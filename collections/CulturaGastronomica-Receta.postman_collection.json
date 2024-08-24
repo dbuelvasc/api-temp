@@ -1,0 +1,821 @@
+{
+	"info": {
+		"_postman_id": "4506f3ce-054a-4389-9a3f-5670a9377611",
+		"name": "CulturaGastronomica-Receta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión como administrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_cultura\", data.id);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Griega\",\r\n    \"descripcion\": \"Los griegos comparten tradiciones gastronómicas con Italia, pero también con Oriente Medio y, debido a su territorio, se especializan en comida mediterránea con una alta diversidad de platillos y vinos. \"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una receta #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_receta_1\", data.id);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Tzatziki\",\r\n    \"descripcion\": \"Es una receta muy rápida y sencilla de preparar, con ingredientes que fácilmente tenemos en casa o que podemos conseguir sin dificultad. Además, no necesita ni cocción, ni batidora, ni nada, así que apenas manchamos, que es otro punto a favor\",\r\n    \"urlFoto\": \"https://i.blogs.es/26b157/tzatziki_rec/1366_2000.jpg\",\r\n    \"procesoPreparacion\": \"Empezamos pelando el pepino y lavándolo bien. Luego, con un rallador fino, lo rallamos hasta que quede una especie de puré de pepino. Lo salamos ligeramente y lo dejamos en un escurridor o en un colador para que vaya soltando el agua. Por otro lado, en un cuenco, mezclamos el yogur, el aceite, el diente de ajo picado, el zumo de 1/2 limón (o un poco menos), la menta picada (puede ser hierbabuena) y una pizca de sal y pimienta. Se pueden usar también yogures normales escurriendo bien el suero que tienen en un colador, aunque el resultado no es tan cremoso. Por último, incorporamos el pepino bien escurrido, removemos suavemente y servimos frío. Se puede servir inmediatamente, pero el Tzatziki griego está mejor reposado un par de horas en la nevera, para que esté más frío y un poco más denso.\",\r\n    \"videoPreparacion\": \"https://www.youtube.com/watch?v=bfLpguFZUp8\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una receta #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_receta_2\", data.id);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Spanokopita\",\r\n    \"descripcion\": \"Es una receta griega que significa tarta de espinacas. Básicamente, consiste en un pastel griego de espinacas con queso feta. Los griegos suelen comerla para desayunar o como parte del aperitivo en porciones pequeñas.\",\r\n    \"urlFoto\": \"https://imag.bonviveur.com/spanakopita.webp\",\r\n    \"procesoPreparacion\": \"Salteamos la cebolleta con una pizca de sal, Añadimos las espinacas, Colamos el salteado, Mezclamos el queso feta y el requesón, Añadimos el resto de los ingredientes al relleno, Mezclamos, Cubrimos con pan rallado la base del molde, Superponemos 5 capas de masa filo pintadas de mantequilla, Vertemos el relleno de espinacas, Cubrimos con otras 5 capas de masa filo pintadas con mantequilla, Horneamos a 180 ºC durante 40 minutos, Cortamos la spanakopita en porciones y servimos\",\r\n    \"videoPreparacion\": \"https://www.youtube.com/watch?v=56O1xjgL7M0\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una receta a una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/{{id_receta_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"{{id_receta_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una receta a una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1/recetas/{{id_receta_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1",
+						"recetas",
+						"{{id_receta_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una receta inexistente a una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La receta con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene las recetas comunes de una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene las recetas comunes de una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1",
+						"recetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una receta de una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/{{id_receta_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"{{id_receta_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una receta inexistente de una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La receta con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una receta de una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1/recetas/{{id_receta_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1",
+						"recetas",
+						"{{id_receta_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar recetas a una cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[ {\"id\": {{id_receta_2}}}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar recetas a una cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[ {\"id\": -1}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1/paises",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1",
+						"paises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quitar una receta de la cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/{{id_receta_2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"{{id_receta_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quitar una receta de la cultura gastronómica inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La cultura gastronómica con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/-1/recetas/{{id_receta_2}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"-1",
+						"recetas",
+						"{{id_receta_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Quitar una receta inexistente de la cultura gastronómica",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La receta con el id dado no existe\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/recetas/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"culturas-gastronomicas",
+						"{{id_cultura}}",
+						"recetas",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

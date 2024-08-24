@@ -1,0 +1,737 @@
+{
+	"info": {
+		"_postman_id": "f408c1b7-5513-4080-80c7-e514bd907fa4",
+		"name": "Producto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30809826",
+		"_collection_link": "https://miso-api-isac.postman.co/workspace/Dise%C3%B1o-y-construcci%C3%B3n-de-API~c40fb442-42d1-4cd5-bc40-88215bc6f8f9/collection/26903119-f408c1b7-5513-4080-80c7-e514bd907fa4?action=share&source=collection_link&creator=30809826"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_producto\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Descipción de producto de prueba\",\r\n    \"historia\": \"Historia de producto de prueba\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Descipción de producto de prueba\",\r\n    \"historia\": \"Historia de producto de prueba\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"Producto de prueba\",\n    \"descripcion\": \"Descipción de producto de prueba\",\n    \"historia\": \"Historia de producto de prueba\",\n    \"categoria\": \"\",\n    \"culturas_gastronomicas\": []\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Obtener los productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of products > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener los productos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Producto de prueba\",\n        \"descripcion\": \"Descipción de producto de prueba\",\n        \"historia\": \"Historia de producto de prueba\",\n        \"categoria\": \"Categoría de prueba\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un producto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Descipción de producto de prueba\",\r\n    \"historia\": \"Historia de producto de prueba\",\r\n    \"categoria\": \"Categoría de prueba\",\r\n    \"culturas_gastronomicas\": [\r\n        {\r\n            \"id\": 1,\r\n            \"nombre\": \"Cultura gastronómica de prueba\",\r\n            \"descripcion\": \"Descripción de la cultura gastronómica de prueba\"\r\n        }\r\n    ]\r\n}\r\n"
+				}
+			]
+		},
+		{
+			"name": "Obtener un producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Producto no encontrado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/-{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"-{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un producto inexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Producto no encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un  producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Producto de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de producto de prueba actualizado\",\r\n    \"historia\": \"Historia de producto de prueba actualizado\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos/{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar un producto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de producto de prueba actualizado\",\r\n    \"historia\": \"Historia de producto de prueba actualizado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"Producto de prueba actualizado\",\n    \"descripcion\": \"Descipción de producto de prueba actualizado\",\n    \"historia\": \"Historia de producto de prueba actualizado\",\n    \"categoria\": \"\",\n    \"culturas_gastronomicas\": []\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Producto no encontrado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Producto de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de producto de prueba actualizado\",\r\n    \"historia\": \"Historia de producto de prueba actualizado\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos/-{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"-{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar un producto inexistente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de producto de prueba actualizado\",\r\n    \"historia\": \"Historia de producto de prueba actualizado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n   \"codigoEstado\": 404,\r\n   \"mensaje\": \"Producto no encontrado\"\r\n}\r\n"
+				}
+			]
+		},
+		{
+			"name": "Eliminar un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar un producto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Eliminar un producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Producto no encontrado\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/productos/{{id_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos",
+						"{{id_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar un país inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Producto no encontrado\"\n}\n"
+				}
+			]
+		}
+	]
+}

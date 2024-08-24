@@ -1,0 +1,161 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CategoriaProductoEntity {
+  id: Float!
+  nombre: String!
+  productos: [ProductoEntity!]!
+}
+
+type ProductoEntity {
+  id: Float!
+  nombre: String!
+  descripcion: String!
+  historia: String!
+  culturaGastronomica: CulturaGastronomicaEntity!
+  categoriaProducto: CategoriaProductoEntity!
+}
+
+type PaisEntity {
+  id: Float!
+  nombre: String!
+  culturasGastronomicas: [CulturaGastronomicaEntity!]!
+}
+
+type RestauranteEntity {
+  id: Float!
+  nombre: String!
+  ciudad: String!
+  culturaGastronomica: CulturaGastronomicaEntity!
+}
+
+type RecetaEntity {
+  id: Float!
+  nombre: String!
+  descripcion: String!
+  urlFoto: String!
+  procesoPreparacion: String!
+  videoPreparacion: String!
+  culturaGastronomica: CulturaGastronomicaEntity!
+}
+
+type CulturaGastronomicaEntity {
+  id: Float!
+  nombre: String!
+  descripcion: String!
+  paises: [PaisEntity!]!
+  productos: [ProductoEntity!]!
+  recetas: [RecetaEntity!]!
+  restaurantes: [RestauranteEntity!]!
+}
+
+type RestauranteEstrellaMichelinEntity {
+  id: Float!
+  fechaConsecucion: DateTime!
+  restaurante: RestauranteEntity!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  culturas: [CulturaGastronomicaEntity!]!
+  cultura(id: Float!): CulturaGastronomicaEntity!
+  paises: [PaisEntity!]!
+  pais(id: Float!): PaisEntity!
+  productos: [ProductoEntity!]!
+  producto(id: Float!): ProductoEntity!
+  recetas: [RecetaEntity!]!
+  receta(id: Float!): RecetaEntity!
+  restaurantes: [RestauranteEntity!]!
+  restaurante(id: Float!): RestauranteEntity!
+  paisPorIdyCulturaId(idCultura: Float!, idPais: Float!): PaisEntity!
+  paisesPorIdCultura(idCultura: Float!): [PaisEntity!]!
+  productoPorIdyCulturaId(idCultura: Float!, idProducto: Float!): ProductoEntity!
+  productosPorIdCultura(idCultura: Float!): [ProductoEntity!]!
+  recetaPorIdyCulturaId(idCultura: Float!, idReceta: Float!): RecetaEntity!
+  recetasPorIdCultura(idCultura: Float!): [RecetaEntity!]!
+  restaurantePorIdyCulturaId(idCultura: Float!, idRestaurante: Float!): RestauranteEntity!
+  restaurantesPorIdCultura(idCultura: Float!): [RestauranteEntity!]!
+  categoriaProductos: [CategoriaProductoEntity!]!
+  categoriaProducto(id: Float!): CategoriaProductoEntity!
+  estrellasMichelin: [RestauranteEstrellaMichelinEntity!]!
+  estrellaMichelin(id: Int!): RestauranteEstrellaMichelinEntity!
+}
+
+type Mutation {
+  createCultura(cultura: CulturaGastronomicaDto!): CulturaGastronomicaEntity!
+  updateCultura(id: Float!, cultura: CulturaGastronomicaDto!): CulturaGastronomicaEntity!
+  deleteCultura(id: Float!): String!
+  createPais(pais: PaisDto!): PaisEntity!
+  updatePais(id: Float!, pais: PaisDto!): PaisEntity!
+  deletePais(id: Float!): String!
+  createProducto(producto: ProductoDto!): ProductoEntity!
+  updateProducto(id: Float!, producto: ProductoDto!): ProductoEntity!
+  deleteProducto(id: Float!): String!
+  createReceta(receta: RecetaDto!): RecetaEntity!
+  updateReceta(id: Float!, receta: RecetaDto!): RecetaEntity!
+  deleteReceta(id: Float!): String!
+  createRestaurante(restaurante: RestauranteDto!): RestauranteEntity!
+  updateRestaurante(id: Float!, restaurante: RestauranteDto!): RestauranteEntity!
+  deleteRestaurante(id: Float!): String!
+  asociarPaisCultura(idCultura: Float!, idPais: Float!): CulturaGastronomicaEntity!
+  actualizarPaisCultura(idCultura: Float!, paisesDto: [PaisDto!]!): CulturaGastronomicaEntity!
+  eliminarPaisCultura(idCultura: Float!, idPais: Float!): Float!
+  asociarProductoCultura(idCultura: Float!, idProducto: Float!): CulturaGastronomicaEntity!
+  actualizarProductoCultura(idCultura: Float!, productosDto: [ProductoDto!]!): CulturaGastronomicaEntity!
+  eliminarProductoCultura(idCultura: Float!, idProducto: Float!): Float!
+  asociarRecetaCultura(idCultura: Float!, idReceta: Float!): CulturaGastronomicaEntity!
+  actualizarRecetaCultura(idCultura: Float!, recetasDto: [RecetaDto!]!): CulturaGastronomicaEntity!
+  eliminarRecetaCultura(idCultura: Float!, idReceta: Float!): Float!
+  asociarRestauranteCultura(idCultura: Float!, idRestaurante: Float!): CulturaGastronomicaEntity!
+  actualizarRestauranteCultura(idCultura: Float!, restaurantesDto: [RestauranteDto!]!): CulturaGastronomicaEntity!
+  eliminarRestauranteCultura(idCultura: Float!, idRestaurante: Float!): Float!
+  createCategoriaProducto(categoriaProducto: CategoriaProductoDto!): CategoriaProductoEntity!
+  updateCategoriaProducto(id: Float!, categoriaProducto: CategoriaProductoDto!): CategoriaProductoEntity!
+  deleteCategoriaProducto(id: Float!): String!
+  createEstrellaMichelin(estrellaMichelin: RestauranteEstrellaMichelinDto!): RestauranteEstrellaMichelinEntity!
+  updateEstrellaMichelin(id: Int!, estrellaMichelin: RestauranteEstrellaMichelinDto!): RestauranteEstrellaMichelinEntity!
+  deleteEstrellaMichelin(id: Int!): Boolean!
+}
+
+input CulturaGastronomicaDto {
+  nombre: String!
+  descripcion: String!
+}
+
+input PaisDto {
+  nombre: String!
+}
+
+input ProductoDto {
+  nombre: String!
+  descripcion: String!
+  historia: String!
+}
+
+input RecetaDto {
+  nombre: String!
+  descripcion: String!
+  urlFoto: String!
+  procesoPreparacion: String!
+  videoPreparacion: String!
+}
+
+input RestauranteDto {
+  nombre: String!
+  ciudad: String!
+}
+
+input CategoriaProductoDto {
+  nombre: String!
+  descripcion: String!
+}
+
+input RestauranteEstrellaMichelinDto {
+  fechaConsecucion: DateTime!
+  restauranteId: Float!
+}

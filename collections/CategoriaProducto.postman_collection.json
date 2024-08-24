@@ -1,0 +1,743 @@
+{
+	"info": {
+		"_postman_id": "ff9e6ba8-0208-43db-b5ed-876a307082cb",
+		"name": "CategoriaProducto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30666062"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión como administrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una CategoriaProducto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"id_cateogria_producto\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"nombreCategoria\",\n    \"descripcion\": \"descripcion nueva categoria\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "201: Agregar una CategoriaProducti",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"nombreCategoria\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"nombreCategoria\",\n    \"productos\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener Categorias de productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of categoriaProdcutos > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200: Obtener Categorias de productos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"nombreCategoria1\"\n    },\n        {\n        \"id\": 2,\n        \"nombre\": \"nombreCategoria2\"\n    },\n        {\n        \"id\": 3,\n        \"nombre\": \"nombreCategoria3\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener una Categoria de producto por id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{id_cateogria_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{id_cateogria_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200: Obtener una Categoria de producto por id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 123,\n    \"nombre\": \"nombreCategoria\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una categoria de producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Categoría de productos no encontrada\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una categoria de producto inexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Categoría de productos no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una Categoria de producto por id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"nuevoNombreCategoria\",\n    \"descripcion\": \"nueva descripcion\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{id_cateogria_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{id_cateogria_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "404: Actualizar una Categoria de producto por id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Not Found\",\n    \"message\": \"Categoria de producto no encontrada\"\n}"
+				},
+				{
+					"name": "204: Actualizar una Categoria de producto por id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar una Categoria de producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"nuevoNombreCategoria\",\n    \"descripcion\": \"nueva descripcion\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "404: Actualizar una Categoria de producto por id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"message\": \"Categoria de producto no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una Categoria de producto por id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{id_cateogria_producto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{id_cateogria_producto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "204: Quitar una Categoria de producto por id Copy",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "404: Quitar una Categoria de producto por id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Not Found\",\n    \"message\": \"Categoria de producto no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una Categoria de producto inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"nuevoNombreCategoria\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "404: Eliminar una Categoria de producto inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos",
+								"{{idCategoria}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"message\": \"Categoria de producto no encontrada\"\n}"
+				}
+			]
+		}
+	]
+}

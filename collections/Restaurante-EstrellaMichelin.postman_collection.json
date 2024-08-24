@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "35bcbd55-7f25-4476-822c-b6b5715ddedf",
+		"name": "Restaurante-EstrellaMichelin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1367953"
+	},
+	"item": [
+    {
+      "name": "Iniciar sesión como administrador",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var data = pm.response.json()\r",
+              "pm.globals.set(\"token\", data.token);\r",
+              "\r",
+              "pm.test(\"El codigo de estado es 201\", function () {\r",
+              "   pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/users/login",
+          "host": ["{{baseURL}}"],
+          "path": ["users", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Todas las Estrellas Michelin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response should be an array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/restaurantes-estrella-michelin",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes-estrella-michelin"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener una Estrella Michelin por ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains Michelin star data\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "    pm.expect(jsonData).to.have.property('restaurante');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/restaurantes-estrella-michelin/{{estrellaMichelinId}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes-estrella-michelin", "{{estrellaMichelinId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear una Estrella Michelin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Response must have an id\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nombre\": \"Nueva Estrella Michelin\",\n    \"restaurante\": { /* Data for associated restaurant */ }\n}"
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes-estrella-michelin",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes-estrella-michelin"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar una Estrella Michelin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains updated Michelin star data\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.nombre).to.eql(pm.environment.get(\"nombre\"));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"nombre\": \"Estrella Michelin Actualizada\"\n}"
+        },
+        "url": {
+          "raw": "{{baseURL}}/restaurantes-estrella-michelin/{{estrellaMichelinId}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes-estrella-michelin", "{{estrellaMichelinId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar una Estrella Michelin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/restaurantes-estrella-michelin/{{estrellaMichelinId}}",
+          "host": ["{{baseURL}}"],
+          "path": ["restaurantes-estrella-michelin", "{{estrellaMichelinId}}"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

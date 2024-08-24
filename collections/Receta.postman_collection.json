@@ -1,0 +1,737 @@
+{
+	"info": {
+		"_postman_id": "0c6b1792-5bc8-459a-ad97-e28136d3f652",
+		"name": "Receta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30809826",
+		"_collection_link": "https://miso-api-isac.postman.co/workspace/Dise%C3%B1o-y-construcci%C3%B3n-de-API~c40fb442-42d1-4cd5-bc40-88215bc6f8f9/collection/26903119-0c6b1792-5bc8-459a-ad97-e28136d3f652?action=share&source=collection_link&creator=30809826"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una receta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"id_receta\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Receta de prueba\",\r\n    \"descripcion\": \"Descipción de receta de prueba\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba.mp4\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear una receta",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Receta de prueba\",\r\n    \"descripcion\": \"Descipción de receta de prueba\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba.mp4\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"Receta de prueba\",\n    \"descripcion\": \"Descipción de receta de prueba\",\n    \"urlFoto\": \"https://www.uri.com/receta_prueba.png\",\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba\",\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba.mp4\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Obtener las recetas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of recipes > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/recetas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener las recetas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/recetas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"nombre\": \"Receta de prueba\",\n        \"descripcion\": \"Descipción de receta de prueba\",\n        \"urlFoto\": \"https://www.uri.com/receta_prueba.png\",\n        \"procesoPreparacion\": \"Proceso de preparación de receta de prueba\",\n        \"videoPreparacion\": \"https://www.uri.com/receta_prueba.mp4\",\n        \"culturaGastronomica\": {\n            \"id\": 1,\n            \"nombre\": \"Cultura gastronómica de prueba\",\n            \"descripcion\": \"Descripción de la cultura gastronómica de prueba\"\n        }\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener una receta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/recetas/{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una receta",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Receta de prueba\",\r\n    \"descripcion\": \"Descipción de receta de prueba\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba.mp4\",\r\n    \"culturas_gastronomicas\": [\r\n        {\r\n            \"id\": 1,\r\n            \"nombre\": \"Cultura gastronómica de prueba\",\r\n            \"descripcion\": \"Descripción de la cultura gastronómica de prueba\"\r\n        }\r\n    ]\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener una receta inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Receta no encontrada\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/recetas/-{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"-{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una receta inexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Receta no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una  receta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Receta de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de receta de prueba actualizado\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba2.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba actualizado\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba2.mp4\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/recetas/{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar una receta",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Receta de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de receta de prueba actualizado\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba2.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba actualizado\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba2.mp4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"Receta de prueba actualizado\",\n    \"descripcion\": \"Descipción de receta de prueba actualizado\",\n    \"urlFoto\": \"https://www.uri.com/receta_prueba2.png\",\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba actualizado\",\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba2.mp4\",\n    \"culturas_gastronomicas\": {\n        \"id\": 1,\n        \"nombre\": \"Cultura gastronómica de prueba\",\n        \"descripcion\": \"Descripción de la cultura gastronómica de prueba\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una receta inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Receta no encontrada\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Receta de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de receta de prueba actualizado\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba2.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba actualizado\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba2.mp4\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/recetas/-{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"-{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar una receta inexistente",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Receta de prueba actualizado\",\r\n    \"descripcion\": \"Descipción de receta de prueba actualizado\",\r\n    \"urlFoto\": \"https://www.uri.com/receta_prueba2.png\",\r\n    \"procesoPreparacion\": \"Proceso de preparación de receta de prueba actualizado\",\r\n    \"videoPreparacion\": \"https://www.uri.com/receta_prueba2.mp4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n   \"codigoEstado\": 404,\r\n   \"mensaje\": \"La receta con el id dado no existe\"\r\n}\r\n"
+				}
+			]
+		},
+		{
+			"name": "Eliminar una receta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/recetas/{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar una receta",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Eliminar una receta inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Receta no encontrada\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/recetas/-{{id_receta}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"recetas",
+						"-{{id_receta}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar una receta inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/recetas/{{id_receta}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"recetas",
+								"{{id_receta}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Receta no encontrada\"\n}\n"
+				}
+			]
+		}
+	]
+}

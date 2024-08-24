@@ -1,0 +1,916 @@
+{
+	"info": {
+		"_postman_id": "78e7b927-4ca3-468b-a760-5fbf899b0543",
+		"name": "CategoriaProducto-Producto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30666062"
+	},
+	"item": [
+		{
+			"name": "Iniciar sesión como administrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"token\", data.token);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"username\": \"admin\",\r\n   \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una CategoriaProducto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"idCategoria\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"nombreCategoria\",\n    \"descripcion\": \"descripcion nueva categoria\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "201: Agregar una CategoriaProducti",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"nombreCategoria\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/categoria-productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categoria-productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"nombreCategoria\",\n    \"productos\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear un producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"idProducto\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Descipción de producto de prueba\",\r\n    \"historia\": \"Historia de producto de prueba\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Descipción de producto de prueba\",\r\n    \"historia\": \"Historia de producto de prueba\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"nombre\": \"Producto de prueba\",\n    \"descripcion\": \"Descipción de producto de prueba\",\n    \"historia\": \"Historia de producto de prueba\",\n    \"categoria\": \"\",\n    \"culturas_gastronomicas\": []\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Obtiene los productos usados en una categoria de producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{idCategoria}}",
+						"productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtiene los productos usados en una categoria de producto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"productos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 0,\n        \"nombre\": \"Nombre de producto\",\n        \"descripcion\": \"Descripción de producto\",\n        \"historia\": \"Historia de producto\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtiene los productos usados en una categoria de productos inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1/productos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1",
+						"productos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtiene los productos usados en una categoria de productos inexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"productos"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Categoria de producto no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Agregar un producto a una categoria de productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}/productos/{{idProducto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{idCategoria}}",
+						"productos",
+						"{{idProducto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar un producto a una categoria de productos",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/paises/{{id_pais}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"paises",
+								"{{id_pais}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 0,\n    \"nombre\": \"Nombre de la categoria de productos\",\n    \"productos\": [\n        {\n            \"id\": 0,\n            \"nombre\": \"Nombre de producto\",\n            \"descripcion\": \"Descripción de producto\",\n            \"historia\": \"Historia de producto\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Agregar un producto a una categoria de productos inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1/productos/{{idProducto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1",
+						"productos",
+						"{{idProducto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar un producto a una categoria de productos inexistente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/paises/{{id_pais}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"paises",
+								"{{id_pais}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"Categoria de producto no encontrada\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Agregar un producto inexistente a una categoria de productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}/productos/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{idCategoria}}",
+						"productos",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar un producto inexistente a una categoria de productos",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/paises/{{id_pais}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"paises",
+								"{{id_pais}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"El producto con el id dado no existe\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Quitar un producto de la categoria de productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}/productos/{{idProducto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{idCategoria}}",
+						"productos",
+						"{{idProducto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Quitar un producto de la categoria de productos",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Quitar un producto de la categoria de productos inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/-1/productos/{{idProducto}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"-1",
+						"productos",
+						"{{idProducto}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Quitar un producto de la categoria de productos inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"La cultura gastronómica con el id dado no existe\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Quitar un producto inexistente de la categoria de productos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/categoria-productos/{{idCategoria}}/productos/-1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"categoria-productos",
+						"{{idCategoria}}",
+						"productos",
+						"-1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Quitar un producto inexistente de la categoria de productos",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/culturas-gastronomicas/{{id_cultura}}/productos/{{id_producto}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"culturas-gastronomicas",
+								"{{id_cultura}}",
+								"productos",
+								"{{id_producto}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"codigoEstado\": 404,\n    \"mensaje\": \"El producto con el id dado no existe\"\n}"
+				}
+			]
+		}
+	]
+}
